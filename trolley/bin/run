@@ -1,0 +1,10 @@
+#!/bin/bash
+if [ ! -d "/webapp/.git" ]; then
+  git clone https://github.com/trolleydienst/trolley.git /webapp
+fi
+chown -R www-data:www-data /webapp
+chmod -R 777 /webapp
+cd /webapp
+su www-data -s /bin/bash -c 'composer install'
+/etc/init.d/php7.1-fpm start
+/etc/init.d/nginx start

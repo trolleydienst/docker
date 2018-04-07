@@ -1,0 +1,11 @@
+FROM ubuntu:17.10
+RUN apt-get update
+RUN apt-get install -y git curl nginx php-fpm
+WORKDIR /tmp
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+COPY bin/ /usr/bin
+COPY nginx.conf /etc/nginx/sites-enabled/default
+VOLUME /webapp
+CMD /usr/bin/run
+EXPOSE 80
